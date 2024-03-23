@@ -34,8 +34,8 @@
                 {{ $t('simulator.panel_body.timing_diagram.units') }}
                 <span id="timing-diagram-log"></span>
             </div>
-            <div id="plot" ref="plotRef">
-                <canvas id="plotArea"></canvas>
+            <div id="plot" :style="{ width: plotWidth + 'px', height: plotHeight + 'px' }">
+                <canvas id="plotArea" @mousedown="onMouseDown" @mouseup="onMouseUp" @mousemove="onMouseMove"></canvas>
             </div>
         </div>
     </div>
@@ -44,7 +44,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import _plotArea from '#/simulator/src/plotArea'
-import { timingDiagramButtonActions } from '#/simulator/src/plotArea'
+import { sh, cycleWidth, frameInterval } from '#/simulator/src/plotArea'
 import TimingDiagramButtons from './TimingDiagramButtons.vue'
 import buttonsJSON from '#/assets/constants/Panels/TimingDiagramPanel/buttons.json'
 import PanelHeader from '../Shared/PanelHeader.vue'
@@ -58,34 +58,35 @@ interface TimingDiagramButton {
 }
 
 interface PlotArea {
-    resize: () => void
-    [key: string]: () => void
+    resize: () => void;
+    scrollAcc: number;
+    autoScroll: boolean;
+    mouseDown: boolean;
+    mouseX: number;
+    mouseDownX: number;
+    mouseDownTime: number;
+    cycleUnit: number;
+    [button: string]: any;
 }
 
 const plotArea: PlotArea = _plotArea
 const buttons = ref<TimingDiagramButton[]>(buttonsJSON)
-const plotRef = ref<HTMLElement | null>(null)
 const cycleUnits = ref(1000)
+const plotWidth = ref(560);
+const plotHeight = ref(20);
 
 function handleButtonClick(button: string) {
     console.log('clicked', button)
     if (button === 'smaller') {
-        if (plotRef.value) {
-            plotRef.value.style.width = `${Math.max(
-                plotRef.value.offsetWidth - 20,
-                560
-            )}px`
-        }
-        plotArea.resize()
+        plotWidth.value = Math.max(plotWidth.value - sh(20), sh(560));
+        plotArea.resize();
     } else if (button === 'larger') {
-        if (plotRef.value) {
-            plotRef.value.style.width = `${plotRef.value.offsetWidth + 20}px`
-        }
-        plotArea.resize()
+        plotWidth.value += sh(20);
+        plotArea.resize();
     } else if (button === 'smallHeight') {
-        timingDiagramButtonActions.smallHeight()
+        plotHeight.value = Math.max(plotHeight.value - sh(20), sh(20));
     } else if (button === 'largeHeight') {
-        timingDiagramButtonActions.largeHeight()
+        plotHeight.value = Math.min(plotHeight.value + sh(20), sh(50));
     } else {
         plotArea[button]()
     }
@@ -96,6 +97,35 @@ function handleUnitsChange(event: Event) {
     const timeUnits = parseInt(inputElem.value, 10)
     if (isNaN(timeUnits) || timeUnits < 1) return
     plotArea.cycleUnit = timeUnits
+}
+
+function onMouseDown(e: MouseEvent) {
+    const rect = plotArea.canvas.getBoundingClientRect()
+    const x = sh(e.clientX - rect.left)
+    plotArea.scrollAcc = 0
+    plotArea.autoScroll = false
+    plotArea.mouseDown = true
+    plotArea.mouseX = x
+    plotArea.mouseDownX = x
+    plotArea.mouseDownTime = new Date().getTime()
+}
+
+function onMouseUp() {
+    plotArea.mouseDown = false
+    const time = new Date().getTime() - plotArea.mouseDownTime
+    const offset = (plotArea.mouseX - plotArea.mouseDownX) / cycleWidth
+    plotArea.scrollAcc = (offset * frameInterval) / time
+}
+
+function onMouseMove(e: MouseEvent) {
+    const rect = plotArea.canvas.getBoundingClientRect()
+    const x = sh(e.clientX - rect.left)
+    if (plotArea.mouseDown) {
+        plotArea.cycleOffset -= (x - plotArea.mouseX) / cycleWidth
+        plotArea.mouseX = x
+    } else {
+        plotArea.mouseDown = false
+    }
 }
 </script>
 
