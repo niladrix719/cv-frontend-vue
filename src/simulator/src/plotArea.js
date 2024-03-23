@@ -8,7 +8,7 @@ function sh(x) {
     return x * DPR
 }
 
-export { sh };
+export { sh, DPR };
 
 /**
  * Spec Constants
@@ -32,7 +32,7 @@ var textColor = 'black'
 var waveFormColor = 'cyan'
 var timeLineStartX = flagLabelWidth + padding
 
-export { cycleWidth, frameInterval }
+export { cycleWidth, frameInterval, timeLineHeight, padding, timeLineStartX }
 
 // Helper functions for canvas
 
@@ -47,6 +47,8 @@ function getFlagStartY(flagIndex) {
 function getCycleStartX(cycleNumber) {
     return timeLineStartX + (cycleNumber - plotArea.cycleOffset) * cycleWidth
 }
+
+export { getFullHeight }
 
 /**
  * @type {Object} plotArea
