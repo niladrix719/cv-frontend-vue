@@ -1,5 +1,5 @@
 /**
- * @jest-environment jsdom
+ * @jest-environment happy-dom
  */
 
 import CodeMirror from 'codemirror'

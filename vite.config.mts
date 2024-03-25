@@ -1,7 +1,8 @@
-import { defineConfig } from 'vite'
+/// <reference types="vitest" />
+import { defineConfig } from 'vitest/config'
 import vue from '@vitejs/plugin-vue'
 import { fileURLToPath, URL } from 'url'
-import vueI18n from '@intlify/vite-plugin-vue-i18n'
+import { vueI18n } from "@intlify/vite-plugin-vue-i18n";
 
 // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vite-plugin
 import vuetify from 'vite-plugin-vuetify'
@@ -48,5 +49,22 @@ export default defineConfig({
             },
             // }),
         },
+    },
+    test: {
+        testMatch: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],
+        testPathIgnorePatterns: ['/node_modules/', '/dist/', '/public/'],
+        transform: {
+            '^.+\\.vue$': 'vite-jest',
+            '^.+\\.ts$': 'vite-jest',
+            '^.+\\.css$': '<rootDir>/path/to/styleMock.js',
+        },
+        deps: {
+            optimizer: {
+              web: {
+                include: ['vuetify'],
+              },
+            },
+          },
+        environment: 'happy-dom'
     },
 })
