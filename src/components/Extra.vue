@@ -164,7 +164,8 @@
 
     <!-- --------------------------------------------------------------------------------------------- -->
     <!-- Message Display -->
-    <div id="MessageDiv"></div>
+    <!-- <div id="MessageDiv"></div> -->
+    <AlertMessage />
     <!-- --------------------------------------------------------------------------------------------- -->
 
     <!-- --------------------------------------------------------------------------------------------- -->
@@ -320,4 +321,5 @@ import CustomShortcut from './DialogBox/CustomShortcut.vue'
 import InsertSubcircuit from './DialogBox/InsertSubcircuit.vue'
 import OpenOffline from './DialogBox/OpenOffline.vue'
 import ReportIssue from './ReportIssue/ReportIssue.vue'
+import AlertMessage from './MessageBoxes/AlertMessage/AlertMessage.vue'
 </script>

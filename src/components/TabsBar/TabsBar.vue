@@ -76,7 +76,7 @@ import {
     // scopeList,
     switchCircuit,
 } from '#/simulator/src/circuit'
-// import MessageBox from '#/components/MessageBox/messageBox.vue'
+// import MessageBox from '#/components/MessageBoxes/MessageBox/messageBox.vue'
 import { useState } from '#/store/SimulatorStore/state'
 import { closeCircuit } from '../helpers/deleteCircuit/DeleteCircuit.vue'
 

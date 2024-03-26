@@ -18,7 +18,7 @@ import { getDependenciesList, scopeList } from '#/simulator/src/circuit'
 import { switchCircuit } from '#/simulator/src/circuit'
 import { usePromptStore } from '#/store/promptStore'
 import { useState } from '#/store/SimulatorStore/state'
-import MessageBox from '#/components/MessageBox/messageBox.vue'
+import MessageBox from '#/components/MessageBoxes/MessageBox/messageBox.vue'
 
 type SimulatorStateType = {
     activeCircuit: {

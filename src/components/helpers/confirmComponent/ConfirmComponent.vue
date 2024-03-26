@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import messageBox from '#/components/MessageBox/messageBox.vue'
+import messageBox from '#/components/MessageBoxes/MessageBox/messageBox.vue'
 import { usePromptStore } from '#/store/promptStore'
 
 function clearMessageBoxFields(): void {

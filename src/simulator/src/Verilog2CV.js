@@ -29,11 +29,13 @@ import 'codemirror/addon/edit/closebrackets.js'
 import 'codemirror/addon/hint/anyword-hint.js'
 import 'codemirror/addon/hint/show-hint.js'
 import 'codemirror/addon/display/autorefresh.js'
-import { showError, showMessage } from './utils'
+import { showMessage } from './utils'
 import { showProperties } from './ux'
+import UseAlertMessage from '#/hooks/UseAlertMessage';
 
 var editor
 var verilogMode = false
+const { showError } = UseAlertMessage();
 
 export async function createVerilogCircuit() {
     const returned = await createNewCircuitScope(

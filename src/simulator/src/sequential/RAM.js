@@ -44,7 +44,9 @@ import { parseNumber, showMessage } from '../utils'
  * @category sequential
  */
 import { colors } from '../themer/themer'
-import { showError } from '../utils'
+import UseAlertMessage from '#/hooks/UseAlertMessage';
+const { showError } = UseAlertMessage();
+
 export default class RAM extends CircuitElement {
     constructor(
         x,

@@ -22,7 +22,7 @@
 <script lang="ts" setup>
 import { stripTags } from '#/simulator/src/utils'
 import { useState } from '#/store/SimulatorStore/state'
-import messageBox from '@/MessageBox/messageBox.vue'
+import messageBox from '@/MessageBoxes/MessageBox/messageBox.vue'
 import { ref } from '@vue/reactivity'
 import { onMounted, onUpdated } from '@vue/runtime-core'
 

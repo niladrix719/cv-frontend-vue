@@ -3,7 +3,9 @@ import Node, { findNode } from '../node'
 import simulationArea from '../simulationArea'
 import { correctWidth, rect2, fillText } from '../canvasApi'
 import plotArea from '../plotArea'
-import { showError } from '../utils'
+import UseAlertMessage from '#/hooks/UseAlertMessage';
+
+const { showError } = UseAlertMessage();
 /**
  * @class
  * Tunnel

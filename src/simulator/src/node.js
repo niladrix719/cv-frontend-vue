@@ -1,7 +1,8 @@
 /* eslint-disable import/no-cycle */
 import { drawCircle, drawLine, arc } from './canvasApi'
 import simulationArea from './simulationArea'
-import { distance, showError } from './utils'
+import { distance } from './utils'
+import UseAlertMessage from '#/hooks/UseAlertMessage';
 import {
     renderCanvas,
     scheduleUpdate,
@@ -14,6 +15,8 @@ import {
 import Wire from './wire'
 // import { colors } from './themer/themer';
 import { colors } from './themer/themer'
+
+const { showError } = UseAlertMessage();
 
 /**
  * Constructs all the connections of Node node

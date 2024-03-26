@@ -4,12 +4,15 @@
 /* eslint-disable no-restricted-globals */
 /* eslint-disable no-alert */
 import { resetScopeList, scopeList, newCircuit } from '../circuit'
-import { showMessage, showError, generateId } from '../utils'
+import { showMessage, generateId } from '../utils'
+import UseAlertMessage from '#/hooks/UseAlertMessage';
 import { checkIfBackup } from './backupCircuit'
 import { generateSaveData, getProjectName, setProjectName } from './save'
 import load from './load'
 import { SimulatorStore } from '#/store/SimulatorStore/SimulatorStore'
 import { confirmOption } from '#/components/helpers/confirmComponent/ConfirmComponent.vue'
+
+const { showError } = UseAlertMessage()
 
 /**
  * Helper function to recover unsaved data

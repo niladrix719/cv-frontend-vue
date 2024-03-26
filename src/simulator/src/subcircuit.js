@@ -11,7 +11,7 @@ import {
     forceResetNodesSet,
 } from './engine'
 import { loadScope } from './data/load'
-import { showError } from './utils'
+import UseAlertMessage from '#/hooks/UseAlertMessage';
 
 import Node, { findNode } from './node'
 import { fillText, correctWidth, rect2 } from './canvasApi'
@@ -20,6 +20,8 @@ import { layoutModeGet } from './layoutMode'
 import { verilogModeGet } from './Verilog2CV'
 import { sanitizeLabel } from './verilogHelpers'
 import { SimulatorStore } from '#/store/SimulatorStore/SimulatorStore'
+
+const { showError } = UseAlertMessage();
 /**
  * Function to load a subcicuit
  * @category subcircuit

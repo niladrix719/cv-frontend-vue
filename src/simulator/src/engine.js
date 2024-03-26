@@ -8,10 +8,12 @@ import plotArea from './plotArea'
 import simulationArea from './simulationArea'
 import { dots, canvasMessage, findDimensions, rect2 } from './canvasApi'
 import { showProperties, prevPropertyObjGet } from './ux'
-import { showError } from './utils'
+import UseAlertMessage from '#/hooks/UseAlertMessage';
 import miniMapArea from './minimap'
 import { resetup } from './setup'
 import { verilogModeGet } from './Verilog2CV'
+
+const { showError } = UseAlertMessage()
 
 /**
  * Core of the simulation and rendering algorithm.
