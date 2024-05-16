@@ -121,8 +121,12 @@ export async function generateSaveData(name, setName = true) {
         }
 
         completed[id] = true
-        update(scopeList[id]) // For any pending integrity checks on subcircuits
-        data.scopes.push(backUp(scopeList[id]))
+        // Removed: no such check is required. saveScope should be strictly read only and
+        // should not change state
+        // update might change state.
+        
+        // update(scopeList[id]); // For any pending integrity checks on subcircuits
+        data.scopes.push(backUp(scopeList[id]));
     }
 
     // Save all circuits
