@@ -8,13 +8,14 @@
     <div class="panel-body">
       <div class="search-results"></div>
       <div class="accordion">
-        <div v-for="(elements, el) in circuitElementList" :key="el">
-          <div v-if="elements.length > 0 && elements[0].canShowInSubcircuit" class="panelHeader">{{ el }}s</div>
-          <div v-if="elements.length > 0 && elements[0].canShowInSubcircuit" class="panel">
-            <div v-for="(element, i) in elements" :key="i" class="icon subcircuitModule"
-              @mousedown="selectElement(el, i)" v-if="!element.subcircuitMetadata.showInSubcircuit">
-              <img :src="`/img/${el}.svg`">
-              <p class="img__description">{{ element.label !== '' ? element.label : 'unlabeled' }}</p>
+        <div v-for="el in filteredList" :key="el">
+          <div class="panelHeader">{{ el }}s</div>
+          <div class="panel">
+            <div v-for="(element, index) in globalScope[el]" :key="index"
+              v-if="!element.subcircuitMetadata.showInSubcircuit" class="icon subcircuitModule" :id="`${el}-${index}`"
+              :data-element-id="index" :data-element-name="el" @mousedown="() => selectElement(el, index)">
+              <img :src="`/img/${el}.svg`" />
+              <p class="img__description">{{ element.label || 'unlabeled' }}</p>
             </div>
           </div>
         </div>
@@ -27,16 +28,20 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
 import metadata from '../../../simulator/src/metadata.json';
+import simulationArea from '#/simulator/src/simulationArea'
 
 const circuitElementList = ref(metadata.circuitElementList);
 
 const subCircuitElementExists = computed(() => {
-  for (let el in circuitElementList) {
-    if (globalScope[el].length > 0 && globalScope[el][0].canShowInSubcircuit) {
-      return true;
-    }
-  }
-  return false;
+  return circuitElementList.value.some(el =>
+    globalScope[el].some(element => element.canShowInSubcircuit && !element.subcircuitMetadata.showInSubcircuit)
+  );
+});
+
+const filteredList = computed(() => {
+  return circuitElementList.value.filter(el =>
+    globalScope[el]?.length > 0 && globalScope[el][0]?.canShowInSubcircuit
+  );
 });
 
 function selectElement(elementName, elementIndex) {
@@ -46,4 +51,5 @@ function selectElement(elementName, elementIndex) {
   element.newElement = true;
   simulationArea.lastSelected = element;
 }
+
 </script>
