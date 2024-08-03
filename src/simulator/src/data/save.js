@@ -532,3 +532,24 @@ export default async function save() {
     // Restore everything
     resetup()
 }
+
+/**
+ * Function to autosave the data of circuit
+ * @category data
+ * @exports save
+ */
+var checkForAutosave = 1;
+
+export async function autosave() {
+    var circuitData = await generateSaveData('Untitled');
+    localStorage.setItem('autosave', circuitData);
+}
+
+export function checkBackups() {
+    if (checkForAutosave < globalScope.backups.length) {
+        autosave();
+        checkForAutosave = globalScope.backups.length;
+    }
+}
+
+setInterval(checkBackups, 3000);
